@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">fireAuthwithfireStore</string>
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="type_array">
+        <item>NGO</item>
+        <item>User</item>
+    </string-array>
+    <string-array name="Ngo_array">
+        <item>Womens</item>
+        <item>Childrens</item>
+        <item>Cancer</item>
+        <item>Senior Citizen</item>
+        <item>Mental Health</item>
+
+        <item>Environmental</item>
+        <item>Blood Bank</item>
+        <item>Other</item>
+
+    </string-array>
+    <string name="title_activity_admin_nav">AdminNav</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_signout">Sign Out</string>
+    <string name="home_second">Home Second</string>
+</resources>
