@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.slideshow.SlideshowFragment">
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50sp"
+        android:hint="Event Name"
+        android:layout_marginBottom="20sp"
+        android:id="@+id/etEventName"/>
+    <EditText
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etEventName"
+        android:layout_centerHorizontal="true"
+        android:hint="Start Date"
+        android:id="@+id/etEventStart"
+        android:layout_marginBottom="20sp"
+        />
+    <EditText
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etEventStart"
+        android:layout_centerHorizontal="true"
+        android:hint="End Date"
+        android:id="@+id/etEventEnd"
+        android:layout_marginBottom="20sp"
+        />
+    <EditText
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etEventEnd"
+        android:layout_centerHorizontal="true"
+        android:hint="Start Time"
+        android:id="@+id/etEventStartTime"
+        android:layout_marginBottom="20sp"
+        />
+    <EditText
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etEventStartTime"
+        android:layout_centerHorizontal="true"
+        android:hint="End Time"
+        android:id="@+id/etEventEndTime"
+        android:layout_marginBottom="20sp"
+        />
+    <EditText
+        android:layout_width="300sp"
+        android:layout_height="200sp"
+        android:layout_below="@+id/etEventEndTime"
+        android:layout_centerHorizontal="true"
+        android:hint="Description"
+        android:id="@+id/etEventDetail"
+        android:layout_marginBottom="20sp"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Add Event"
+        android:layout_below="@id/etEventDetail"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btRegEvent"/>
+</RelativeLayout>
