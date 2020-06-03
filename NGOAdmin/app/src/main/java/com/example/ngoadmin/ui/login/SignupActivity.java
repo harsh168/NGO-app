@@ -40,7 +40,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        Button regBt = findViewById(R.id.login);
+        Button regBt = findViewById(R.id.btReg);
         TextView logBt = findViewById(R.id.txtLogin);
         logBt.setOnClickListener(this);
         regBt.setOnClickListener(this);
@@ -61,7 +61,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 Intent i = new Intent(this, LoginActivity.class);
                 startActivity(i);
                 break;
-            case R.id.login:
+            case R.id.btReg:
                 mAuth = FirebaseAuth.getInstance();
                 final EditText email = findViewById(R.id.etEmail);
                 final EditText password = findViewById(R.id.etPass);

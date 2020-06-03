@@ -1,10 +1,13 @@
 package com.example.ngoadmin.ui.slideshow;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
@@ -37,7 +41,27 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+class TimePickerFragment extends DialogFragment {
 
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Use the current time as the default values for the picker
+        final Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+
+        // Activity has to implement this interface
+        TimePickerDialog.OnTimeSetListener listener = (TimePickerDialog.OnTimeSetListener) getActivity();
+
+        // Create a new instance of TimePickerDialog and return it
+        return new TimePickerDialog(getActivity(), listener, hour, minute,
+                DateFormat.is24HourFormat(getActivity()));
+    }
+
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        // Do something with the time chosen by the user
+    }
+}
 public class SlideshowFragment extends Fragment implements View.OnClickListener{
 
     EditText eName, eStDate, eStTime, eEnDate, eEnTime, eDetails;
@@ -45,7 +69,8 @@ public class SlideshowFragment extends Fragment implements View.OnClickListener{
     private FirebaseUser currentUser = mAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button btAdd;
-    TimePicker timePicker1,timePicker2;
+    TimePickerDialog.OnTimeSetListener timePicker1;
+    TimePicker timePicker2;
     DatePickerDialog picker1,picker2;
     int totalEvent;
 
@@ -107,7 +132,7 @@ public class SlideshowFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()){
             case R.id.btRegEvent:
 
-                DocumentReference docRef = db.collection("client").document(currentUser.getUid());
+                DocumentReference docRef = db.collection("admin").document(currentUser.getUid());
                 docRef
                         .update(
                                     "Event"+totalEvent+".Event Name",eName.getText().toString(),
@@ -115,7 +140,8 @@ public class SlideshowFragment extends Fragment implements View.OnClickListener{
                                 "Event"+totalEvent+".Event End Date",eEnDate.getText().toString(),
                                 "Event"+totalEvent+".Event Start Time",eStTime.getText().toString(),
                                 "Event"+totalEvent+".Event End Time",eEnTime.getText().toString(),
-                                "Event"+totalEvent+".Event Details",eDetails.getText().toString()
+                                "Event"+totalEvent+".Event Details",eDetails.getText().toString(),
+                                "totalEvents",totalEvent+1+""
 
 
 
@@ -162,52 +188,34 @@ public class SlideshowFragment extends Fragment implements View.OnClickListener{
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year1, int monthOfYear1, int dayOfMonth1) {
-                                eStDate.setText(dayOfMonth1 + "/" + (monthOfYear1 + 1) + "/" + year1);
+                                eEnDate.setText(dayOfMonth1 + "/" + (monthOfYear1 + 1) + "/" + year1);
                             }
                         }, year1, month1, day1);
                 picker2.show();
                 break;
             case R.id.etEventStartTime:
-                int hour, minute;
-                String am_pm;
-                if (Build.VERSION.SDK_INT >= 23 ){
-                    hour = timePicker1.getHour();
-                    minute = timePicker1.getMinute();
-                }
-                else{
-                    hour = timePicker1.getCurrentHour();
-                    minute = timePicker1.getCurrentMinute();
-                }
-                if(hour > 12) {
-                    am_pm = "PM";
-                    hour = hour - 12;
-                }
-                else
-                {
-                    am_pm="AM";
-                }
-                eStTime.setText("Selected Date: "+ hour +":"+ minute+" "+am_pm);
+                Calendar c = Calendar.getInstance();
+                int mHour = c.get(Calendar.HOUR_OF_DAY);
+                int mMinute = c.get(Calendar.MINUTE);
+                TimePickerDialog dialog =
+                        new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                            @Override public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                eStTime.setText(""+hourOfDay+":"+minute);
+                            }
+                        }, mHour, mMinute, true);
+                dialog.show();
                 break;
             case R.id.etEventEndTime:
-                int hour1, minute1;
-                String am_pm1;
-                if (Build.VERSION.SDK_INT >= 23 ){
-                    hour1 = timePicker2.getHour();
-                    minute1 = timePicker2.getMinute();
-                }
-                else{
-                    hour1 = timePicker2.getCurrentHour();
-                    minute1 = timePicker2.getCurrentMinute();
-                }
-                if(hour1 > 12) {
-                    am_pm1 = "PM";
-                    hour1 = hour1 - 12;
-                }
-                else
-                {
-                    am_pm1="AM";
-                }
-                eEnTime.setText("Selected Date: "+ hour1 +":"+ minute1+" "+am_pm1);
+                Calendar c1 = Calendar.getInstance();
+                int mHour1 = c1.get(Calendar.HOUR_OF_DAY);
+                int mMinute1 = c1.get(Calendar.MINUTE);
+                TimePickerDialog dialog1 =
+                        new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                            @Override public void onTimeSet(TimePicker view, int hourOfDay1, int minute1) {
+                                eEnTime.setText(""+hourOfDay1+":"+minute1);
+                            }
+                        }, mHour1, mMinute1, true);
+                dialog1.show();
                 break;
         }
 

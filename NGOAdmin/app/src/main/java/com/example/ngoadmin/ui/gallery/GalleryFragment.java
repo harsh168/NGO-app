@@ -58,6 +58,12 @@ public class GalleryFragment extends Fragment implements View.OnClickListener, A
         spinner.setOnItemSelectedListener(this);
         LoadAddressAsyncTask task1 =new LoadAddressAsyncTask(getContext());
         task1.execute();
+        name = root.findViewById(R.id.etName);
+        email = root.findViewById(R.id.etEmail);
+        ph = root.findViewById(R.id.etPh);
+        lic = root.findViewById(R.id.etLic);
+        password = root.findViewById(R.id.etPass);
+        cpassword = root.findViewById(R.id.etCPass);
         Button bt = root.findViewById(R.id.btReg);
         bt.setOnClickListener(this);
         return root;
@@ -65,31 +71,38 @@ public class GalleryFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onClick(View v) {
-        Map<String, Object> data = new HashMap<>();
-        data.put("name", name.getText().toString());
-        data.put("email", email.getText().toString());
-        data.put("mobile", ph.getText().toString());
-        data.put("password", password.getText().toString());
-        data.put("licNo", lic.getText().toString());
-        data.put("nType", nType);
-        db.collection("admin").document(currentUser.getUid())
-                .set(data)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Success", "DocumentSnapshot successfully written!");
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        ft.replace(R.id.nav_host_fragment, new HomeFragment());
-                        ft.addToBackStack(null);
-                        ft.commit();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("Error", "Error writing document", e);
-                    }
-                });
+        if(password.getText().toString().equals(cpassword.getText().toString())){
+            DocumentReference docRef = db.collection("admin").document(currentUser.getUid());
+            docRef
+                    .update(
+
+                            "name", name.getText().toString(),
+                    "email", email.getText().toString(),
+                            "mobile", ph.getText().toString(),
+                            "password", password.getText().toString(),
+                            "licNo", lic.getText().toString(),
+                            "nType", nType
+
+
+                    )
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("TAG", "DocumentSnapshot successfully updated!");
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            ft.replace(R.id.nav_host_fragment, new HomeFragment());
+                            ft.addToBackStack(null);
+                            ft.commit();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("TAG", "Error updating document", e);
+                        }
+                    });
+        }
+
     }
 
     @Override
@@ -126,6 +139,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener, A
                             email.setText(document.get("email").toString());
                             ph.setText(document.get("mobile").toString());
                             nType=document.get("nType").toString();
+                            lic.setText(document.get("licNo").toString());
                             int x=0;
                             if(nType.equals("Animal Welfare")){
                                 x=0;
