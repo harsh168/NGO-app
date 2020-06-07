@@ -141,6 +141,7 @@ public class SlideshowFragment extends Fragment implements View.OnClickListener{
                                 "Event"+totalEvent+".Event Start Time",eStTime.getText().toString(),
                                 "Event"+totalEvent+".Event End Time",eEnTime.getText().toString(),
                                 "Event"+totalEvent+".Event Details",eDetails.getText().toString(),
+                                "Event"+totalEvent+".participant","0",
                                 "totalEvents",totalEvent+1+""
 
 
