@@ -106,7 +106,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                                                         Log.w("Error", "Error writing document", e);
                                                     }
                                                 });
-                                        
+
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w("SignUpActivity", "createUserWithEmail:failure", task.getException());

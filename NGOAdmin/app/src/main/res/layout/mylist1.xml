@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:textSize="30sp"
+        android:textColor="#000000"
+        android:padding="10sp"
+        android:id="@+id/txtName"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtName"
+        android:hint="Gender: Male"
+        android:id="@+id/txtGender"
+        android:paddingLeft="20sp"
+        android:textSize="20sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtName"
+        android:id="@+id/txtDob"
+        android:hint="Dob: 01/2/1999"
+        android:layout_toRightOf="@+id/txtGender"
+        android:paddingLeft="35sp"
+        android:textSize="20sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtGender"
+        android:hint="Gender: Male"
+        android:id="@+id/txtPh"
+        android:paddingLeft="20sp"
+        android:textSize="20sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtGender"
+        android:id="@+id/txtEmail"
+        android:hint="Dob: 01/2/1999"
+        android:layout_toRightOf="@+id/txtGender"
+        android:paddingLeft="60sp"
+        android:textSize="20sp"/>
+</RelativeLayout>
