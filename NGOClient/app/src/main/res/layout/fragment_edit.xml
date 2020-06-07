@@ -73,7 +73,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Register"
+            android:hint="Update"
             android:layout_below="@id/spGender"
             android:layout_centerHorizontal="true"
             android:id="@+id/btReg"/>

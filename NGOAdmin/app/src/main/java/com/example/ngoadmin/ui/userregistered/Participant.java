@@ -44,7 +44,7 @@ public class Participant extends Fragment {
         task1.execute();
         list = (ListView) root.findViewById(R.id.list);
         eventId = getArguments().getInt("id");
-       
+
         return root;
     }
 

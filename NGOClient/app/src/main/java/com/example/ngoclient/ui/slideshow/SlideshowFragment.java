@@ -89,8 +89,11 @@ public class SlideshowFragment extends Fragment {
                         for(int i= 0; i < l.size();i++)
                         {
                             String data = l.get(i);
+                            if(data!=""){
+
                             data=data.substring(0,data.indexOf("="));
-                            Log.e("Data",data);
+                            data=data.replace(" ","");}
+                            Log.e("Data","\n"+data);
                             l.set(i,data);
                         }
                         Log.e("list",l.toString());
@@ -102,6 +105,7 @@ public class SlideshowFragment extends Fragment {
                                         if (task.isSuccessful()) {
                                             for (QueryDocumentSnapshot document : task.getResult()) {
                                                 Log.d("TAG", document.getId() + " => " + document.getData());
+                                                Log.e("compare",l.contains(document.getId())+"  "+l.toString());
                                                 if (l.contains(document.getId())) {
                                                         ngoName.add(document.get("name").toString());
                                                         ngoId.add(document.getId());

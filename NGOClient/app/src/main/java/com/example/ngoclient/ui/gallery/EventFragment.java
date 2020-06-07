@@ -68,6 +68,7 @@ public class EventFragment extends Fragment {
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             DocumentReference docRef = db.collection("admin").document(GalleryFragment.ngoId.get(pos));
+            Log.e("pos",GalleryFragment.ngoId.get(pos).toString());
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -78,6 +79,7 @@ public class EventFragment extends Fragment {
                             int i = Integer.parseInt(document.get("totalEvents").toString());
                             for (int j =1;j<=i;j++)
                             {
+                                Log.e("jjjjjjjj",""+j);
                                 eventId.add(j);
                                 eventName.add(document.get(FieldPath.of("Event"+j,"Event Name")).toString());
                                 eventStart.add(document.get(FieldPath.of("Event"+j,"Event Start Date")).toString());
