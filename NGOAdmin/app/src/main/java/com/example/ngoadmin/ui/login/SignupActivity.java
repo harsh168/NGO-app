@@ -106,30 +106,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                                                         Log.w("Error", "Error writing document", e);
                                                     }
                                                 });
-                                        Map<String, Object> data1 = new HashMap<>();
-                                        data.put("name", etname.getText().toString());
-                                        data.put("email", email.getText().toString());
-                                        data.put("mobile", mobile.getText().toString());
-                                        data.put("password", password.getText().toString());
-                                        data.put("licNo", licNo.getText().toString());
-                                        data.put("nType", nType);
-                                        data.put("totalEvents","0");
-                                        db.collection("event").document(user.getUid())
-                                                .set(data)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Log.d("Success", "DocumentSnapshot successfully written!");
-                                                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                                                        startActivity(i);
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.w("Error", "Error writing document", e);
-                                                    }
-                                                });
+                                        
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w("SignUpActivity", "createUserWithEmail:failure", task.getException());
