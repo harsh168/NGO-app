@@ -1,0 +1,2 @@
+rootProject.name='NGO Client'
+include ':app'

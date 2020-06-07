@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".ui.home.HomeFragment">
+    <Button
+        android:id="@+id/btEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90sp"
+        android:layout_marginBottom="10sp"
+        android:hint="Edit Details"
+        android:padding="50sp" />
+
+    <Button
+        android:id="@+id/btView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btEdit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30sp"
+        android:layout_marginBottom="10sp"
+        android:hint="View Event"
+        android:padding="50sp" />
+
+    <Button
+        android:id="@+id/btPart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30sp"
+        android:layout_marginBottom="10sp"
+        android:hint="Participated \n Events"
+        android:padding="50sp" />
+
+</RelativeLayout>

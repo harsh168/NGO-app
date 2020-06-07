@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10sp"
+    tools:context=".ui.gallery.DetailFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Title"
+        android:textSize="30sp"
+        android:textColor="#000000"
+        android:paddingTop="20sp"
+        android:id="@+id/txtName"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Star Date"
+        android:paddingTop="10sp"
+        android:layout_below="@+id/txtName"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:paddingLeft="10sp"
+        android:id="@+id/txtStart"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Star Date"
+        android:layout_below="@+id/txtStart"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:paddingLeft="10sp"
+        android:paddingTop="10sp"
+        android:id="@+id/txtEnd"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Star Date"
+        android:layout_below="@+id/txtName"
+        android:textSize="20sp"
+        android:paddingTop="10sp"
+        android:layout_marginLeft="100sp"
+        android:layout_toRightOf="@+id/txtStart"
+        android:textColor="#000000"
+        android:id="@+id/txtStartTime"
+        android:paddingLeft="10sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Star Date"
+        android:layout_below="@+id/txtStart"
+        android:textSize="20sp"
+        android:paddingTop="10sp"
+        android:layout_marginLeft="100sp"
+        android:layout_toRightOf="@+id/txtEnd"
+        android:textColor="#000000"
+        android:id="@+id/txtEndTime"
+        android:paddingLeft="10sp"
+        />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:text="Details"
+    android:layout_below="@id/txtEnd"
+    android:layout_marginTop="10sp"
+    android:textSize="20sp"
+    android:id="@+id/txtDetails"
+    android:textColor="#000000"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="#FF0000"
+        android:layout_below="@+id/txtDetails"
+        android:layout_marginTop="10sp"
+        android:textSize="20sp"
+        android:id="@+id/txtError"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Participate"
+        android:layout_below="@+id/txtError"
+        android:id="@+id/btPart"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="190sp"/>
+
+</RelativeLayout>
