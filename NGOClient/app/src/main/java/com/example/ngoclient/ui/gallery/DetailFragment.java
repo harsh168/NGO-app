@@ -29,17 +29,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DetailFragment extends Fragment {
-    int pos, id;
+    int pos, id, flag=0,flag1=0;
     TextView txtName, txtStDt, txtStTi, txtEnDt, txtEnTi, txtDetails, txtError;
     Button bt;
-    int partNo=0;
+    int partNo = 0;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -64,21 +65,17 @@ public class DetailFragment extends Fragment {
 
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                 String formattedDate = df.format(c);
-                Log.e("Date",formattedDate);
+                Log.e("Date", formattedDate);
                 String date = txtStDt.getText().toString();
                 try {
                     Date date1 = df.parse(date);
                     Date date2 = df.parse(formattedDate);
-                    if (date1.compareTo(date2)<0)
-                    {
-                        Log.e("Inside","if");
+                    if (date1.compareTo(date2) < 0) {
+                        Log.e("Inside", "if");
                         txtError.setText("Too Late for Participation");
-                    }
-                    else
-                    {
-                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                        FirebaseUser currentUser = mAuth.getCurrentUser();
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    } else {
+
+
                         DocumentReference docRef = db.collection("admin").document(GalleryFragment.ngoId.get(pos));
                         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
@@ -87,8 +84,76 @@ public class DetailFragment extends Fragment {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
                                         Log.d("TAG", "DocumentSnapshot data: " + document.getData());
-                                        partNo=Integer.parseInt(document.get("participant").toString());
-                                        partNo++;
+                                        String data = document.get("Event"+id).toString();
+                                        String[] data1= data.replaceAll(", "," ").replace("{","").replace("}","").split(" ");
+
+
+
+                                        for (int i = 0; i < data1.length; i++) {
+                                            //data1[i] = data1[i].replaceAll("=.+", "");
+                                            Log.e("data1",data1[i]);
+                                            if(data1[i].contains(currentUser.getUid()))
+                                            {
+                                                flag =1;
+                                                break;
+                                            }
+                                        }
+                                        if(flag==1)
+                                        {
+                                            txtError.setText("Already Registered");
+                                        }
+                                        else
+                                        {
+                                            DocumentReference docRef = db.collection("admin").document(GalleryFragment.ngoId.get(pos));
+                                            docRef
+                                                    .update(
+
+                                                            "Event" + id + "." + "participant" + partNo, currentUser.getUid(),
+                                                            "Event" + id + "." + "participant",""+partNo
+
+
+                                                    )
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d("TAG", "DocumentSnapshot successfully updated!");
+                                                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                                            ft.replace(R.id.nav_host_fragment, new HomeFragment());
+                                                            ft.addToBackStack(null);
+                                                            ft.commit();
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w("TAG", "Error updating document", e);
+                                                        }
+                                                    });
+                                            docRef = db.collection("user").document(currentUser.getUid());
+                                            docRef
+                                                    .update(
+
+                                                            "Event."+GalleryFragment.ngoId.get(pos),""+id
+
+
+                                                    )
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d("TAG", "DocumentSnapshot successfully updated!");
+                                                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                                            ft.replace(R.id.nav_host_fragment, new HomeFragment());
+                                                            ft.addToBackStack(null);
+                                                            ft.commit();
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w("TAG", "Error updating document", e);
+                                                        }
+                                                    });
+                                        }
                                     } else {
                                         Log.d("TAG", "No such document");
                                     }
@@ -99,31 +164,7 @@ public class DetailFragment extends Fragment {
                         });
 
 
-                        docRef = db.collection("event").document(GalleryFragment.ngoId.get(pos));
-                        docRef
-                                .update(
-
-                                        "Event"+id+"."+"participant"+partNo,currentUser.getUid()
-
-
-                                )
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("TAG", "DocumentSnapshot successfully updated!");
-                                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                        ft.replace(R.id.nav_host_fragment, new HomeFragment());
-                                        ft.addToBackStack(null);
-                                        ft.commit();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w("TAG", "Error updating document", e);
-                                    }
-                                });
-                        Log.e("Inside","Else");
+                        Log.e("Inside", "Else");
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -132,6 +173,7 @@ public class DetailFragment extends Fragment {
         });
         return root;
     }
+
     class LoadAddressAsyncTask extends AsyncTask<Void, Void, Void> {
 
         Context context;
@@ -153,12 +195,30 @@ public class DetailFragment extends Fragment {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             Log.d("TAG", "DocumentSnapshot data: " + document.getData());
-                            txtName.setText(document.get(FieldPath.of("Event"+id,"Event Name")).toString());
-                            txtStDt.setText(document.get(FieldPath.of("Event"+id,"Event Start Date")).toString());
-                            txtEnDt.setText(document.get(FieldPath.of("Event"+id,"Event End Date")).toString());
-                            txtStTi.setText(document.get(FieldPath.of("Event"+id,"Event Start Time")).toString());
-                            txtEnTi.setText(document.get(FieldPath.of("Event"+id,"Event End Time")).toString());
-                            txtDetails.setText(document.get(FieldPath.of("Event"+id,"Event Details")).toString());
+                            txtName.setText(document.get(FieldPath.of("Event" + id, "Event Name")).toString());
+                            txtStDt.setText(document.get(FieldPath.of("Event" + id, "Event Start Date")).toString());
+                            txtEnDt.setText(document.get(FieldPath.of("Event" + id, "Event End Date")).toString());
+                            txtStTi.setText(document.get(FieldPath.of("Event" + id, "Event Start Time")).toString());
+                            txtEnTi.setText(document.get(FieldPath.of("Event" + id, "Event End Time")).toString());
+                            txtDetails.setText(document.get(FieldPath.of("Event" + id, "Event Details")).toString());
+                        } else {
+                            Log.d("TAG", "No such document");
+                        }
+                    } else {
+                        Log.d("TAG", "get failed with ", task.getException());
+                    }
+                }
+            });
+            docRef = db.collection("admin").document(GalleryFragment.ngoId.get(pos));
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                            partNo=Integer.parseInt(document.get(FieldPath.of("Event"+id,"participant")).toString());
+                            partNo++;
                         } else {
                             Log.d("TAG", "No such document");
                         }
